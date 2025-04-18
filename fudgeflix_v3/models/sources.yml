@@ -1,0 +1,87 @@
+sources:
+  - name: fudgeflix
+    database: raw
+    schema: fudgeflix_v3
+    tables:
+      - name: ff_accounts
+        description: "Customer account master data"
+        columns:
+          - name: account_id
+            tests: [unique, not_null]
+          - name: account_email
+          - name: account_plan_id
+          - name: account_zipcode
+
+      - name: ff_account_billing
+        description: "Subscription billing transactions linked to plans and accounts"
+        columns:
+          - name: ab_id
+            tests: [unique, not_null]
+          - name: ab_account_id
+          - name: ab_plan_id
+          - name: ab_billed_amount
+
+      - name: ff_account_titles
+        description: "Title queueing, shipment, return, and ratings by account"
+        columns:
+          - name: at_id
+            tests: [unique, not_null]
+          - name: at_account_id
+          - name: at_title_id
+          - name: at_rating
+
+      - name: ff_titles
+        description: "Movie/show title metadata"
+        columns:
+          - name: title_id
+            tests: [unique, not_null]
+          - name: title_name
+          - name: title_type
+          - name: title_avg_rating
+
+      - name: ff_plans
+        description: "Subscription plan catalog"
+        columns:
+          - name: plan_id
+            tests: [unique, not_null]
+          - name: plan_name
+          - name: plan_price
+
+      - name: ff_zipcodes
+        description: "Geographic location data by zipcode"
+        columns:
+          - name: zip_code
+            tests: [unique, not_null]
+          - name: zip_city
+          - name: zip_state
+
+      - name: ff_cast
+        description: "Actors and their associated titles"
+        columns:
+          - name: cast_people_id
+          - name: cast_title_id
+
+      - name: ff_directors
+        description: "Directors and their associated titles"
+        columns:
+          - name: director_people_id
+          - name: director_title_id
+
+      - name: ff_genres
+        description: "Genre definitions"
+        columns:
+          - name: genre_name
+            tests: [unique, not_null]
+
+      - name: ff_title_genres
+        description: "Mapping of titles to genres (many-to-many)"
+        columns:
+          - name: tg_genre_name
+          - name: tg_title_id
+
+      - name: ff_people
+        description: "People metadata for actors, directors, etc."
+        columns:
+          - name: people_id
+            tests: [unique, not_null]
+          - name: people_name
